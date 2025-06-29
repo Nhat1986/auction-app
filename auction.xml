@@ -1,0 +1,146 @@
+
+
+<?xml version="1.0"?>
+<listings>
+  <listing status="in_progress">
+    <item>item1</item>
+    <category>camera</category>
+    <description>item1</description>
+    <sPrice>100</sPrice>
+    <rPrice>200</rPrice>
+    <bPrice>300</bPrice>
+    <day>7</day>
+    <hour>21</hour>
+    <minute>10</minute>
+    <startDate>2023-10-19</startDate>
+    <startTime>20:38:41+11:00</startTime>
+    <bid>100</bid>
+    <bidderId/>
+  </listing>
+  <listing status="in_progress">
+    <item>item1</item>
+    <category>camera</category>
+    <description>item1</description>
+    <sPrice>100</sPrice>
+    <rPrice>200</rPrice>
+    <bPrice>300</bPrice>
+    <day>7</day>
+    <hour>21</hour>
+    <minute>10</minute>
+    <startDate>2023-10-19</startDate>
+    <startTime>20:38:44+11:00</startTime>
+    <bid>100</bid>
+    <bidderId/>
+  </listing>
+  <listing status="in_progress">
+    <item>item3</item>
+    <category>camera</category>
+    <description>item3</description>
+    <sPrice>100</sPrice>
+    <rPrice>200</rPrice>
+    <bPrice>300</bPrice>
+    <day>7</day>
+    <hour>21</hour>
+    <minute>10</minute>
+    <startDate>2023-10-19</startDate>
+    <startTime>20:44:47+11:00</startTime>
+    <bid>100</bid>
+    <bidderId/>
+  </listing>
+  <listing status="in_progress">
+    <item_num>0</item_num>
+    <item>item4</item>
+    <category>camera</category>
+    <description>item4</description>
+    <sPrice>100</sPrice>
+    <rPrice>200</rPrice>
+    <bPrice>300</bPrice>
+    <day>7</day>
+    <hour>21</hour>
+    <minute>10</minute>
+    <startDate>2023-10-19</startDate>
+    <startTime>20:56:50+11:00</startTime>
+    <bid>100</bid>
+    <bidderId/>
+  </listing>
+  <listing status="in_progress">
+    <item_num>0</item_num>
+    <item>item4</item>
+    <category>camera</category>
+    <description>item4</description>
+    <sPrice>100</sPrice>
+    <rPrice>200</rPrice>
+    <bPrice>300</bPrice>
+    <day>7</day>
+    <hour>21</hour>
+    <minute>10</minute>
+    <startDate>2023-10-19</startDate>
+    <startTime>20:57:31+11:00</startTime>
+    <bid>100</bid>
+    <bidderId/>
+  </listing>
+  <listing status="in_progress">
+    <item_num>1</item_num>
+    <item>item5</item>
+    <category>camera</category>
+    <description>item5</description>
+    <sPrice>100</sPrice>
+    <rPrice>200</rPrice>
+    <bPrice>300</bPrice>
+    <day>7</day>
+    <hour>21</hour>
+    <minute>10</minute>
+    <startDate>2023-10-19</startDate>
+    <startTime>20:58:06+11:00</startTime>
+    <bid>300</bid>
+    <bidderId>1</bidderId>
+  </listing>
+  <listing status="in_progress">
+    <item_num>2</item_num>
+    <item>item5</item>
+    <category>camera</category>
+    <description>item5</description>
+    <sPrice>100</sPrice>
+    <rPrice>200</rPrice>
+    <bPrice>300</bPrice>
+    <day>1</day>
+    <hour>1</hour>
+    <minute>10</minute>
+    <startDate>2023-10-20</startDate>
+    <startTime>18:25:35+11:00</startTime>
+    <bid>300</bid>
+    <bidderId>1</bidderId>
+  </listing>
+  <listing status="in_progress">
+    <item_num>3</item_num>
+    <item>item6</item>
+    <category>camera</category>
+    <description>item6</description>
+    <sPrice>200</sPrice>
+    <rPrice>300</rPrice>
+    <bPrice>4000</bPrice>
+    <day>6</day>
+    <hour>3</hour>
+    <minute>10</minute>
+    <startDate>2023-10-20</startDate>
+    <startTime>18:33:17+11:00</startTime>
+    <bid>4000</bid>
+    <bidderId>1</bidderId>
+  </listing>
+  <listing status="in_progress">
+    <item_num>4</item_num>
+    <item>item6</item>
+    <category>camera</category>
+    <description>item6</description>
+    <sPrice>200</sPrice>
+    <rPrice>300</rPrice>
+    <bPrice>4000</bPrice>
+    <day>6</day>
+    <hour>3</hour>
+    <minute>10</minute>
+    <startDate>2023-10-20</startDate>
+    <startTime>18:34:26+11:00</startTime>
+    <bid>4000</bid>
+    <bidderId>1</bidderId>
+  </listing>
+</listings>

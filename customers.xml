@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<customers>
+  <customer>
+    <id>1</id>
+    <fName>asd1</fName>
+    <sName>asd1</sName>
+    <email>asd1@asd1</email>
+    <password>asd1</password>
+  </customer>
+  <customer>
+    <id>2</id>
+    <fName>asd1</fName>
+    <sName>asd1</sName>
+    <email>asd1@asd1</email>
+    <password>asd1</password>
+  </customer>
+</customers>

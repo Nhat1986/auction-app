@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<meta name="description" content="Maintenance" />
+	<meta name="keywords" content="HTML, JavaScript, PHP, ajax, XML, XSLT" />
+	<meta name="author" content="Nhat Vuong" />
+	<link href="./styles/style.css" rel="stylesheet">	
+	<script type="text/javascript" src="session.js"></script>
+	<title>Maintenance</title>
+	<script>
+		var xhr = false;
+		if (window.XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		}
+		else if (window.ActiveXObject) {
+			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		
+		function processItems() {
+			request("processItems.php", handleProcessItemsResponse);
+		}
+		
+		function generateReport() {
+			request("generateReport.php", handleGenerateReportResponse);
+		}
+		
+		function handleProcessItemsResponse() {
+			if ((xhr.readyState == 4) && (xhr.status == 200)) {
+				document.getElementById('msg').innerHTML = xhr.responseText;
+			}
+		}
+		
+		function handleGenerateReportResponse() {
+			if ((xhr.readyState == 4) && (xhr.status == 200)) {
+				displayReport(xhr.responseXML);
+			}
+		}
+		
+		function loadXMLDoc(filename)
+		{
+			if (window.ActiveXObject)
+		    {
+			  xhttp = new ActiveXObject("Msxml2.XMLHTTP");
+			}
+			else 
+			{
+			  xhttp = new XMLHttpRequest();
+			}
+			xhttp.open("GET", filename, false);
+			try {xhttp.responseType = "msxml-document"} catch(err) {} // Helping IE11
+			xhttp.send("");
+			return xhttp.responseXML;
+		}
+		
+		function displayReport(xml)
+		{
+			xsl = loadXMLDoc("report.xsl");
+			// code for IE
+			if (window.ActiveXObject || xhttp.responseType == "msxml-document")
+			{
+			  ex = xml.transformNode(xsl);
+			  document.getElementById("report").innerHTML = ex;
+			}
+			// code for Chrome, Firefox, Opera, etc.
+			else if (document.implementation && document.implementation.createDocument)
+			{
+			  xsltProcessor = new XSLTProcessor();
+			  xsltProcessor.importStylesheet(xsl);
+			  resultDocument = xsltProcessor.transformToFragment(xml, document);
+			  
+			  let listingNodes = xml.getElementsByTagName('listing');
+			  let soldCount = 0, failedCount = 0, totalRevenue = 0;
+			  for (let i = 0; i < listingNodes.length; i++){
+				let listingNode = listingNodes[i];
+				let status = listingNode.getAttribute('status');
+				let revenue = parseInt(listingNode.getElementsByTagName("revenue")[0].innerHTML);
+				if (status === 'sold') {
+					soldCount += 1;
+				} else if (status === 'failed') {
+					failedCount += 1;
+				}
+				totalRevenue += revenue;
+			  }
+			  let summary = document.createElement('div');
+			  let soldSummary = document.createElement('p');
+			  soldSummary.innerHTML = "Number of sold items: " + soldCount;
+			  let failedSummary = document.createElement('p');
+			  failedSummary.innerHTML = "Number of failed items: " + failedCount;
+			  let revenueSummary = document.createElement('p');
+			  revenueSummary.innerHTML = "Revenue: " + totalRevenue;
+			  summary.appendChild(soldSummary);
+			  summary.appendChild(failedSummary);
+			  summary.appendChild(revenueSummary);
+			 
+			  let container = document.getElementById("report");
+			  container.innerHTML = "";
+			  container.appendChild(resultDocument);
+			  container.appendChild(summary);
+			}
+		}
+		
+		
+		function request(url, handleResponseFunc)
+		{
+			if (window.ActiveXObject) {
+			  xhr = new ActiveXObject("Msxml2.XMLHTTP");
+			} else {
+			  xhr = new XMLHttpRequest();
+			}
+			xhr.open("GET", url, true);
+			xhr.onreadystatechange = handleResponseFunc;
+			xhr.send(null);
+		}		
+	</script>
+	<style>
+		nav {
+			margin-bottom: 15px;
+		}
+		td {
+			padding: 5px 10px 0 5px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>ShopOnline</h1>
+    </header>
+	<nav>
+		<a href = "./login.htm">Home</a>
+		<a href = "./listing.htm">Listing</a>
+		<a href = "./bidding.htm">Bidding</a>
+		<a href = "./maintenance.htm">Maintenance</a>
+	</nav>
+	
+	<button onclick="processItems()">Process Auction Items</button>
+	<button onclick="generateReport()">Generate Report</button>
+	<p id="msg"></p>
+	<div id="report"></div>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<meta name="description" content="new customer registration" />
+	<meta name="keywords" content="HTML, JavaScript, PHP, ajax, XML, XSLT" />
+	<meta name="author" content="Nhat Vuong" />
+	<link href="./styles/style.css" rel="stylesheet">	
+	<script type="text/javascript" src="session.js"></script>
+	<title>Bidding</title>
+	<script>
+		function loadXMLDoc(filename)
+		{
+			if (window.ActiveXObject)
+		    {
+			  xhttp = new ActiveXObject("Msxml2.XMLHTTP");
+			}
+			else 
+			{
+			  xhttp = new XMLHttpRequest();
+			}
+			xhttp.open("GET", filename, false);
+			try {xhttp.responseType = "msxml-document"} catch(err) {} // Helping IE11
+			xhttp.send("");
+			return xhttp.responseXML;
+		}
+
+		function displayResult()
+		{
+			console.log("Getting listings...");
+			xml = loadXMLDoc("getList.php");
+			xsl = loadXMLDoc("auction.xsl");
+			// code for IE
+			if (window.ActiveXObject || xhttp.responseType == "msxml-document")
+			{
+			  ex = xml.transformNode(xsl);
+			  document.getElementById("listing-container").innerHTML = ex;
+			}
+			// code for Chrome, Firefox, Opera, etc.
+			else if (document.implementation && document.implementation.createDocument)
+			{
+			  let listingNodes = xml.getElementsByTagName('listing');
+			  
+			  for (let i = 0; i < listingNodes.length; i++){
+				let listingNode = listingNodes[i];
+				let startDate = listingNode.getElementsByTagName("startDate")[0].innerHTML;
+				let startTime = listingNode.getElementsByTagName("startTime")[0].innerHTML;
+				let days = parseInt(listingNode.getElementsByTagName("day")[0].innerHTML);
+				let hours = parseInt(listingNode.getElementsByTagName("hour")[0].innerHTML);
+				let minutes = parseInt(listingNode.getElementsByTagName("minute")[0].innerHTML);
+				
+				let start = new Date(startDate.trim() + "T" + startTime.trim()).getTime();
+				let end = start + minutes * 60 * 1000;
+				end += hours * 60 * 60 * 1000;
+				end += days * 24 * 60 * 60 * 1000;
+				
+				const secondsInDay = 60 * 60 * 24;
+				const secondsInHour = 60 * 60;
+				const secondsInMinute = 60;
+				
+				if(end - Date.now() < 0) {
+					let timeRemaining = xml.createElement('timeremaining');
+					timeRemaining.appendChild(xml.createTextNode("Expired"));
+					listingNode.appendChild(timeRemaining);
+				} else {
+					let secondsRemaining = (end - Date.now()) / 1000;
+					let daysRemaining = Math.floor(secondsRemaining / secondsInDay);
+					secondsRemaining = secondsRemaining % secondsInDay;
+					
+					let hoursRemaining = Math.floor(secondsRemaining / secondsInHour);
+					secondsRemaining = secondsRemaining % secondsInHour;
+					
+					let minutesRemaining = Math.floor(secondsRemaining / secondsInMinute);
+					secondsRemaining = Math.floor(secondsRemaining % secondsInMinute);
+					
+					
+					let remainingMsg = daysRemaining + " days " + hoursRemaining + " hours " 
+									+ minutesRemaining + " minutes " + secondsRemaining + " seconds remaining.";
+					
+					let timeRemaining = xml.createElement('timeremaining');
+					timeRemaining.appendChild(xml.createTextNode(remainingMsg));
+					listingNode.appendChild(timeRemaining);
+				}
+			  }
+			  
+			  xsltProcessor = new XSLTProcessor();
+			  xsltProcessor.importStylesheet(xsl);
+			  resultDocument = xsltProcessor.transformToFragment(xml, document);
+			 
+			  let container = document.getElementById("listing-container");
+			  container.innerHTML = "";
+			  container.appendChild(resultDocument);
+			  
+			  // Add event listeners for place bid buttons
+			  let placeBidButtons = document.getElementsByClassName("place-bid-button");
+			  for (let i = 0; i < placeBidButtons.length; i++) {
+				placeBidButtons[i].addEventListener('click', handlePlaceBid);
+			  }
+			  
+			  // Add event listeners for buy it now buttons
+			  let buyItNowButtons = document.getElementsByClassName("buy-it-now-button");
+			  for (let i = 0; i < buyItNowButtons.length; i++) {
+				buyItNowButtons[i].addEventListener('click', handleBuyItNow);
+			  }
+			}
+		}
+		
+		function init() {
+			displayResult();
+			setInterval(displayResult, 5000);
+			checkLoggedIn();
+		}
+		
+		function handlePlaceBid(event) {
+			let itemNum = event.target.dataset.itemNum;
+			let bidPrice = prompt("How much would you like to bid?");
+			if (isNaN(parseInt(bidPrice))) {
+				alert("Please enter a whole number");
+			} else {
+				console.log("handlePlaceBid", itemNum, bidPrice);
+				let response = requestPlaceBid(itemNum, bidPrice);
+				alert(response);
+			}
+		}
+		
+		function handleBuyItNow(event) {
+			let itemNum = event.target.dataset.itemNum;
+			console.log("handleBuyItNow", itemNum);
+			let response = requestBuyItNow(itemNum);
+			alert(response);
+		}
+		
+		function requestPlaceBid(itemNum, bidPrice)
+		{
+			if (window.ActiveXObject)
+		    {
+			  xhttp = new ActiveXObject("Msxml2.XMLHTTP");
+			}
+			else 
+			{
+			  xhttp = new XMLHttpRequest();
+			}
+			xhttp.open("GET", "placeBid.php?itemNum=" + itemNum + "&bidPrice=" + bidPrice, false);
+			try {xhttp.responseType = "msxml-document"} catch(err) {} // Helping IE11
+			xhttp.send("");
+			
+			return xhttp.responseText;
+		}
+		
+		function requestBuyItNow(itemNum)
+		{
+			if (window.ActiveXObject)
+		    {
+			  xhttp = new ActiveXObject("Msxml2.XMLHTTP");
+			}
+			else 
+			{
+			  xhttp = new XMLHttpRequest();
+			}
+			xhttp.open("GET", "buyItNow.php?itemNum=" + itemNum, false);
+			try {xhttp.responseType = "msxml-document"} catch(err) {} // Helping IE11
+			xhttp.send("");
+			
+			return xhttp.responseText;
+		}
+		
+		
+		
+	</script>
+</head>
+<body onload="init()">
+	<header>
+		<h1>ShopOnline</h1>
+    </header>
+	<nav>
+		<a href = "./login.htm">Home</a>
+		<a href = "./listing.htm">Listing</a>
+		<a href = "./bidding.htm">Bidding</a>
+		<a href = "./maintenance.htm">Maintenance</a>
+	</nav>
+	
+	<p><em>Current auction items are listed below. To place a bid for an item, use the Place Bid button</em></p>
+	<p style="font-style: italic";><b>NOTE: </b>Item remaining time  and bid prices are updated every 5 seconds</p>
+		
+		
+
+
+	<p id="msg"></p>
+	
+	<div id="listing-container"></div>
+</html>

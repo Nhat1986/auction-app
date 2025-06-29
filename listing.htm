@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta name="description" content="new customer registration" />
+	<meta name="keywords" content="HTML, JavaScript, PHP, ajax, XML, XSLT" />
+	<meta name="author" content="Nhat Vuong" />
+	<link href="./styles/style.css" rel="stylesheet">
+	<script type="text/javascript" src="listing.js"></script>
+	<script type="text/javascript" src="session.js"></script>
+	<title>Listing</title>
+</head>
+<body>
+	<header>
+		<h1>ShopOnline</h1>
+    </header>
+	<nav>
+		<a href = "./login.htm">Home</a>
+		<a href = "./listing.htm">Listing</a>
+		<a href = "./bidding.htm">Bidding</a>
+		<a href = "./maintenance.htm">Maintenance</a>
+	</nav>
+	<h1>Listing</h1>
+	<p>To create a listing, enter listing details below.</p>
+
+		<table>
+			<tr>
+				<td><label for="item">Item Name* </label></td>
+				<td><input type="text" name="item" id="item" /></td>
+			</tr>
+			<tr>
+				<td><label for="cate">Category* </label></td>
+				<td>
+					<select name="cate" id="cate">
+						<option value="camera">Camera</option>
+						<option value="phone">Phone</option>			
+						<option value="other">Other</option>
+						
+					</select>
+				</td>	
+			</tr>
+			<tr>
+				<td><label for="desc">Description* </label></td>
+				<td><input type="text" name="desc" id="desc" /></td>
+			</tr>
+			<tr>
+				<td><label for="sPrice">Start Price* </label></td>
+				<td><input type="text" name="sPrice" id="sPrice" /></td>
+			</tr>
+			
+			<tr>
+				<td><label for="rPrice">Reverse Price* </label></td>
+				<td><input type="text" name="rPrice" id="rPrice" /></td>
+			</tr>
+
+			<tr>
+				<td><label for="bPrice">Buy it now Price* </label></td>
+				<td><input type="text" name="bPrice" id="bPrice" /></td>
+			</tr>
+			<tr>
+				<td><label for="dura">Duration* </label></td>
+				<td>
+					<select name="day" id="day">
+						<option value="0">Day</option>
+						<option value="1">1</option>			
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>						
+					</select>
+					<select name="hour" id="hour">
+						<option value="0">Hour</option>
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3">3</option>
+						<option value="6">6</option>
+						<option value="9">9</option>
+						<option value="12">12</option>
+						<option value="15">15</option>
+						<option value="18">18</option>
+						<option value="21">21</option>						
+					</select>
+					<select name="minute" id="minute">
+						<option value="0">Minute</option>
+						<option value="1">1</option>
+						<option value="10">10</option>			
+						<option value="15">15</option>
+						<option value="20">20</option>
+						<option value="30">30</option>
+						<option value="45">45</option>						
+					</select>
+				</td>					
+			</tr>
+			
+			<tr>
+				<td><button onclick="createListing();">Listing</button></td>
+				<td><button onclick="clearForm();">Reset</button></td>				
+			</tr>			
+			
+			
+			
+		</table>
+		
+
+
+	<p id="msg"></p>
+</body>
+</html>
